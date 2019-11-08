@@ -1,0 +1,37 @@
+//function with only passing a value as a parameter
+
+
+import UIKit
+func add(_ no1:Int,_ no2:Int) -> Int
+{
+    let num3=no1+no2
+    return num3
+}
+let value=add(5,4)
+print(value)
+
+
+//function with passing a label with parameter
+
+
+import UIKit
+func add(no1:Int,no2:Int) -> Int
+{
+    let num3=no1+no2
+    return num3
+}
+let value=add(no1:5,no2:4)
+print(value)
+
+
+//called function has parameter name as well as label name
+
+
+import UIKit
+func add(no1 num1:Int,no2 num2:Int) -> Int
+{
+    let num3=num1+num2
+    return num3
+}
+let value=add(no1:5,no2:4)
+print(value)
