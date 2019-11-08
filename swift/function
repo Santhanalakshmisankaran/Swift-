@@ -35,3 +35,18 @@ func add(no1 num1:Int,no2 num2:Int) -> Int
 }
 let value=add(no1:5,no2:4)
 print(value)
+
+
+
+//function without return type
+
+
+
+import UIKit
+func add(no1 num1:Int,no2 num2:Int)
+{
+    let num3=num1+num2
+    print(num3)
+}
+add(no1:5,no2:4)
+
