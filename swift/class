@@ -1,0 +1,25 @@
+//class with properties and method
+//class properties must assign with some values
+//object creation must declare the datatype explicitly
+
+import UIKit
+class Employee
+{
+    var emp_name=""
+    var emp_id=0
+    var emp_salary=0
+    func increment()
+    {
+        emp_salary+=1000
+    }
+}
+var employee:Employee=Employee()
+employee.emp_name="santhu"
+employee.emp_id=1
+employee.emp_salary=1000
+
+print(employee.emp_name)
+print(employee.emp_id)
+print(employee.emp_salary)
+employee.increment()
+print(employee.emp_salary)
