@@ -1,0 +1,103 @@
+//base class . it did not inherit by any other subclass
+
+import Foundation
+class car
+{
+    var current_speed=0.0
+    var description:String
+    {
+        return("the car is in \(current_speed) km speed")
+    }
+}
+let mycar=car()
+mycar.current_speed=5
+print(mycar.description)
+
+output:
+    the car is in 5.0 km speed
+ 
+ 
+// subclass and superclass
+   car is superclass and nano is subclass
+   the subclass can inherit the super class properties
+
+
+
+import Foundation
+class car
+{
+    var current_speed=0.0
+    var description:String
+    {
+        return("the car is in \(current_speed) km speed")
+    }
+    func name()
+    {
+      print("this is car")
+    }
+}
+class nano:car
+{
+    var colour="red"
+    func view()
+    {
+        print("\(super.description) and the colour is \(colour)")
+    } 
+
+}
+
+let mynano=nano()
+mynano.current_speed=5
+mynano.view()
+
+
+output:the car is in 5.0 km speed and the colour is red
+
+//overriding concept
+  overriding concept usefull when a two function has same method name but different explanation
+  example:
+    consider two car classes is there they has same method called as a name.one is nano and another one is sumo
+    the nano class is subclass it can access the sumo class but when we call a name function through the nano it should not display 
+    "this is wrong" to avoid this type of error we  are overriding function in inheritance 
+program:
+
+import Foundation
+class sumo
+{
+    var current_speed=7
+    var description:String
+    {
+        return("the car speed is \(current_speed)")
+    } 
+    func name()
+    {
+        print("this is sumo")
+    }
+}
+class nano:sumo
+{
+    var gear=1
+    override var description:String
+    {
+        return("\(super.description) and it is in \(gear) gear")
+    }
+    override func name()
+    {
+        print("this is nano")
+    }
+} 
+let mysumo=sumo()
+mysumo.name()
+print(mysumo.description)
+let mynano=nano()
+mynano.current_speed=5
+mynano.name()
+print(mynano.description)
+
+
+output:
+  this is sumo
+  the car speed is 7
+  this is nano
+  the car speed is 5 and it is in 1 gear
+  
