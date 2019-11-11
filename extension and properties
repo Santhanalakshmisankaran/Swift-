@@ -40,3 +40,43 @@ the set method sets the value of the sidelength. This is what the set and get me
 //when assigning value to that property the set method works.
 
 
+//willset and getset
+
+
+willset performs before assigning a value
+didset performs after assigning a value
+Its come under properties set method
+
+
+import UIKit
+
+class StepCounter {
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("exisiting totalsteps is \(totalSteps),About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}
+
+let stepcount=StepCounter()
+stepcount.totalSteps=200
+stepcount.totalSteps=300
+
+
+output:
+
+exisiting totalsteps is 0,About to set totalSteps to 200
+Added 200 steps
+exisiting totalsteps is 200,About to set totalSteps to 300
+Added 100 steps
+
+
+
+
+
+
