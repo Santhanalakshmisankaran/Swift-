@@ -1,0 +1,82 @@
+//closure is nothing but blocks in c language.closure can capture and store any references of a variable and constant 
+from the context.
+//capturing values
+capturing values is nothing but capture the nested function values
+
+
+example:
+  func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+explanation: the incrementer function can access the properties of the makeIncrementer function.Here amount is access by 
+incrementer function.this is called capturing values.
+
+
+//Function as a parameter.......
+
+
+func add(_ a:Int,_ b:Int)->Int
+{
+    return a+b
+}
+func display(_ addition:(Int,Int)->Int, _ a:Int, _ b:Int)
+{
+    print("Result:\(addition(a,b))")
+}
+display(add,5,4)
+
+output:Result:9
+
+explanation:while passing a function as a parameter the parameter should have a some function name with parameter types and 
+return type of function like above example inside display function.
+
+
+
+
+
+///function as a return type............
+
+
+
+import UIKit
+
+
+func stepforward(_ count:Int)->Int
+{
+    return count+1
+}
+func stepbackward(_ count:Int)->Int
+{
+    return count-1
+}
+func choose_the_step(_ step:Bool)->(Int)->Int
+{
+    return step ? stepbackward : stepforward
+}
+
+var currentstep:Int=3
+let movestep=choose_the_step(currentstep>0)
+while(currentstep != 0)
+{
+    print("\(currentstep)")
+    currentstep=movestep(currentstep)
+}
+print("Zero")
+
+output:
+3
+2
+1
+Zero
+
+
+//In the above program choose_the_step function returns the function which is stepforward or stepbackward which has one integer
+as a parameter.So, the return syntax should contain parameter name and return type of a function.
+.. movestep holds reference of either stepforward or stepbackward . now until the current step get zero we are passing the 
+step inside the movestep.this is called as function as a return type.
+
