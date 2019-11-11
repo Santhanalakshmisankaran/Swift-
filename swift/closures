@@ -1,0 +1,35 @@
+//closure is nothing but blocks in c language.closure can capture and store any references of a variable and constant 
+from the context.
+closure can store a reference of function,variables,constants
+Example:
+ 
+ 
+import UIKit
+func incrementByValue(_ amount:Int)-> () ->Int{
+    var returnvalues=0
+    func increment() ->Int
+    {
+        returnvalues+=amount
+        return returnvalues
+    }
+    return increment
+}
+let incrementByTen=incrementByValue(10)
+let incrementBySeven=incrementByValue(7)
+incrementByTen()
+incrementByTen()
+incrementBySeven()
+incrementByTen()
+incrementBySeven()
+
+return values:
+10
+20
+7
+30
+14
+
+//In the above program parameter 10 has a seperate reference and parameter 7 has a seperate reference. So, whenever you call 
+function the appropriate value of the function get incremented. so, closure has a capacity to hold a reference.
+
+
