@@ -1,0 +1,42 @@
+//Extension 
+it can extend the existing funtionality it cannot override the functionality of existing one.
+it can only add the new functionality.
+If u add the new functionality to an existing type after defining it also,  
+the new functionality will be available in existing types.
+
+
+// get and set method 
+consider a mytriangle class. it has two properties one is sidelength and another one is perimeter. perimeter variable has two
+methods call get and set.Its look like
+import UIKit
+
+class mytriangle
+{
+    var sidelength:Double=5;
+  var perimeter: Double {
+    get {
+        return 3.0 * sidelength
+        }
+    set {
+        sidelength = newValue / 3.0
+        }
+    }
+}
+let obj=mytriangle()
+print("\(obj.perimeter),\(obj.sidelength)")
+obj.perimeter=99
+print("\(obj.perimeter),\(obj.sidelength)")
+
+output:
+perimeter:15.0,sidelength=5.0
+perimeter:99.0,sidelength=33.0
+
+
+//explanation
+whenever you want access the perimeter property the get method works. It caculate the perimeter value through the sidelength.
+whenever you are assigning some specific perimeter value that we also have to modify the sidelength of it . That time 
+the set method sets the value of the sidelength. This is what the set and get method works.
+//for retriving property the get method works 
+//when assigning value to that property the set method works.
+
+
