@@ -1,5 +1,3 @@
-//closure is nothing but blocks in c language.closure can capture and store any references of a variable and constant 
-from the context.
 //capturing values
 capturing values is nothing but capture the nested function values
 
