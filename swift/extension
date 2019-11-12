@@ -1,0 +1,117 @@
+//extension is nothing but add new functionality to te existing one 
+Syntax:
+
+extension sometype
+{
+}
+
+//extend a computed properties
+Double has some of its own properties
+example:
+
+
+import UIKit
+
+
+extension Double
+{
+    var km:Double{ return self*1000.0}
+    var m:Double{ return self}
+    var cm:Double{ return self/100.0}
+    var mm:Double{ return self/1000.0}
+    var ft:Double{ return self/3.28084}
+}
+let km=3.km
+let m=3.m
+let cm=3.cm
+let mm=3.mm
+let ft=3.ft
+print("3km = \(km) meter")
+print("3m = \(m) meter")
+print("3cm = \(cm) meter")
+print("3mm = \(mm) meter")
+print("3ft = \(ft) meter")
+
+output:
+3km = 3000.0 meter
+3m = 3.0 meter
+3cm = 0.03 meter
+3mm = 0.003 meter
+3ft = 0.914399970739201 meter
+
+
+
+Explanation:
+this double has its own property and also this extended properties
+In this program 3 is a self value and accessing a properties through the . operator.It passes the self value through the 
+extension and it retrive the value which user want.
+
+
+
+
+//extension initializer
+
+we can also extend the init  of one structure or function
+
+//extension of methods
+
+program:
+
+import UIKit
+extension Int{
+    func repetition(task: () -> Void)
+    {
+        for _ in 0..<self{
+            task()
+        }
+    }
+}
+3.repetition{
+    print("Hello!")
+}
+
+output:
+
+Hello!
+Hello!
+Hello!
+
+
+explanation: 3 is a self value and task is a object of function which does not have parameter and does not return any value.
+the repetition function repeats the task self times. Int class already has it own methos we can also add this extra function 
+to it.
+
+
+
+//extension subscript
+
+program:
+
+import UIKit
+extension Int {
+    subscript(digitIndex: Int) -> Int {
+        var decimalBase = 1
+        for _ in 0..<digitIndex {
+            decimalBase *= 10
+        }
+        return (self / decimalBase) % 10
+    }
+}
+
+print("\(746381295[0])")
+print("\(746381295[2])")
+print("\(746381295[4])")
+print("\(746381295[7])")
+
+output:
+5
+2
+8
+4
+
+//explanation: extension and subscript is keyword
+
+774631295 is a self value and [0] parameter values
+
+
+
