@@ -1,0 +1,114 @@
+//protocol
+protocols same like class or structure. Its a blueprint of methods and properties. protocols also can adopted by class
+structure and enum.
+Syntax:
+
+protocol protocolname
+{
+  somedefinition
+}
+
+Syntax:(class adopted the protocol)
+
+class classname:protocol1,protocol2
+{
+  definition of the protocol methods and properties
+}
+
+synatax:(If subclass inherits a super class then add a protocol next to the superclass name)
+
+
+class subclassname:superclassname,protocol1,protocol2
+{
+  definition for protocols methods and properties
+}
+
+//get and set method
+
+protocol also says that the property is stored or computed
+computed property shows in protocol like
+
+protocol protocolname
+{
+  var variablename:datatype{get set}
+  var variablename:datatype{get}
+ }
+
+
+//Type property
+
+
+type_property sholud have static keyword always before the var keyword in the protocol declaration
+
+protocol anotherprotocol
+{
+  static var somepropertyname:datatype{get set}
+}
+
+
+//protocol example
+
+import UIKit
+protocol activities
+{
+    func walk()
+    func sleep() -> String
+    static func eat(variadicparam: String...)
+}
+struct person : activities
+{
+    func walk()
+    {
+        print("person is eating")
+    }
+    func sleep()->String
+    {
+        return("person is sleeping")
+    }
+    static func eat(variadicparam: String...)
+    {
+        print(variadicparam)
+    }
+}
+class human : activities
+{
+    func walk()
+    {
+        print("person is eating")
+    }
+    func sleep()->String
+    {
+        return("person is sleeping")
+    }
+    class func eat(variadicparam: String...)
+    {
+        print(variadicparam)
+    }
+}
+let person_obj=person()
+person_obj.walk()
+print(person_obj.sleep())
+person.eat(variadicparam: "breakfast" , "lunch" , "dinner")
+let human_obj=human()
+human_obj.walk()
+print(human_obj.sleep())
+human.eat(variadicparam: "breakfast" , "lunch" , "dinner")
+
+output:
+
+person is eating
+person is sleeping
+["breakfast", "lunch", "dinner"]
+person is eating
+person is sleeping
+["breakfast", "lunch", "dinner"]
+
+explanation:
+  In above example there is one protocol called activites,one structure called person and a class called human. The human and 
+person conforms the protocol activities. 
+the protocol has only the method declaration.the structure and class has a definition of a protocol methods. Observe the 
+static methods they are not access through the instance they are access througth the class or structure name. Because they 
+should have only one copy for the one class or structure.
+
+
+
