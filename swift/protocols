@@ -111,4 +111,12 @@ static methods they are not access through the instance they are access througth
 should have only one copy for the one class or structure.
 
 
+//.....Associated type is protocol generic placeholder
+
+protocol Container {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+}
 
