@@ -1,0 +1,108 @@
+// generic is nothing but a template in c++. In swift it also contains a some extra features.
+//basic 
+//swap two values definition will be same for the all type of parameters. define a seperate code for each and every types is
+not efficient. So, template helps us for that. with template we can perform the same opertaion for many types. In a languages 
+the array and dictionaries are like generics only. because they contain any type of values.
+
+//simple example
+
+import UIKit
+
+func swap(a: inout Int,b: inout Int)
+{
+    let temp=a
+    a=b
+    b=temp
+}
+var a=1 , b=2
+swap(&a,&b)
+print("\(a) \(b)")
+
+output: 2 1
+
+explanation: the inout function works like passed by refernce in c and cpp.this swap function can only change the integer
+values.for doubles and strings also same body wil come but the types are different. here the templates come for use.
+
+//template code:
+
+import UIKit
+
+func swap<T>(a: inout T,b: inout T)
+{
+    let temp=a
+    a=b
+    b=temp
+}
+var a="santhu" , b="nandhu"
+swap(&a,&b)
+print("\(a) \(b)")
+
+output: nandhu santhu
+
+explanation:replace the any variable like T in a datatype place. this program works for all of datatypes. But the a and b 
+should be the sametype(T).
+
+///generic types
+
+arrays and dictionaries are generic types. let use generics in structure. take stack implementation as a example.
+
+program:
+
+import UIKit
+
+struct stack{
+    var Items=[Int]()
+    mutating func push(item:Int)
+    {
+        Items.append(item)
+    }
+    mutating func pop()->Int
+    {
+        return Items.removeLast()
+    }
+}
+var stackobj=stack()
+stackobj.push(item:3)
+stackobj.push(item:4)
+stackobj.push(item:5)
+print(stackobj.Items)
+stackobj.pop()
+print(stackobj.Items)
+
+output:
+[3, 4, 5]
+[3, 4]
+explanation: the above stack structure only use for integer stack.
+
+
+//generic stack
+
+program:
+
+import UIKit
+
+struct stack<Element>{
+    var Items=[Element]()
+    mutating func push(item:Element)
+    {
+        Items.append(item)
+    }
+    mutating func pop()->Element
+    {
+        return Items.removeLast()
+    }
+}
+var stackobj=stack<String>()
+stackobj.push(item:"santhu")
+stackobj.push(item:"nandhu")
+stackobj.push(item:"rithika")
+print(stackobj.Items)
+stackobj.pop()
+print(stackobj.Items)
+ 
+ output:
+ ["santhu", "nandhu", "rithika"]
+["santhu", "nandhu"]
+
+explanation:the above stack can work for all the types because of generics.
+
