@@ -1,0 +1,7 @@
+//opaque type is nothing but a associated type protocol as a return type.
+explanation:
+  we can use a normal protocol as a return type.we will not get any error by that.because we know the type of protocol.
+  But we dont know the type of associated type protocols. we cannot use this as return type. to avoid this we are using opaque 
+  type. opaque type is nothing but adding a some keyword in front of the protocol name. 
+ 
+https://medium.com/@PhiJay/whats-this-some-in-swiftui-34e2c126d4c4  ---  refer this link.
