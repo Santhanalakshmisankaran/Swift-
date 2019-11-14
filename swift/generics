@@ -225,7 +225,33 @@ output:
 explanation:
 typealias replaces the Item with Int . we can use anytype instead of Int. this works fine.
 
-//
+//generic where clause
+
+    where clause we can use anywhere to check some kind of condition. Here we used to check a certain protocol is equal to a 
+    associated type protocol or not.
+//example program
+
+func allItemsMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.Item == C2.Item, C1.Item: Equatable {
+
+}
+explanation: here we are checking that c1.item is a equatable and c1.item and c2.item is equal or not.
+
+//extension with a generic protocol
+
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
+    }
+}
+
+explanation: In all place the protocol will be the same.here also we are checking that the element is equal to the equatable 
+protocol or not. where ever you want to check some condition you can use where.
+
 
 
 
