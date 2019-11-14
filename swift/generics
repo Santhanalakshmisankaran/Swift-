@@ -106,3 +106,127 @@ print(stackobj.Items)
 
 explanation:the above stack can work for all the types because of generics.
 
+///extending generic types
+program:
+
+import UIKit
+
+struct stack<Element>{
+    var Items=[Element]()
+    mutating func push(item:Element)
+    {
+        Items.append(item)
+    }
+    mutating func pop()->Element
+    {
+        return Items.removeLast()
+    }
+}
+extension stack
+{
+    var topitem: Element?
+    {
+        return Items.isEmpty ? nil : Items[Items.count - 1]
+    }
+}
+var stackobj=stack<String>()
+if let value=stackobj.topitem
+{
+    print(value)
+}
+stackobj.push(item:"santhu")
+stackobj.push(item:"nandhu")
+stackobj.push(item:"rithika")
+print(stackobj.Items)
+stackobj.pop()
+print(stackobj.Items)
+if let value=stackobj.topitem
+{
+    print(value)
+}
+
+output:
+["santhu", "nandhu", "rithika"]
+["santhu", "nandhu"]
+nandhu
+explanation:same program repeats again. but the we add the extension of stack. In a extension no need to speify the generic 
+again. we can use the same generic here. 
+
+//type constraint
+
+in this generics u can only compare the pre defined datatypes(int,char,string,float,double).we cannot compare the userdefined
+types like classes.so the compiler throws an error. In swift we cannot compare the two generic types. in comparision it will 
+throw an error. to avoid that we are using a protocol called equatable. this will take care about the generic of that types.
+
+program:
+import UIKit
+
+func compare<T:Equatable>(_ valuetofind:T, _ array:[T])->Int?
+{
+    for (index,value) in array.enumerated()
+    {
+        if value == valuetofind
+        {
+            return index
+        }
+    }
+    return nil
+}
+if let index=compare(3,[1,2,3])
+{
+    print(index)
+}
+
+output:2
+explanation:to compare two generic values we have to use equatable protocol.
+
+//associated type
+
+this is useful when we use the generic types inside protocols.
+use the associatedtyep keyword inside the protocol declaration.
+typealias is same like typedef in c.
+
+program:
+import UIKit
+
+protocol stack
+{
+    associatedtype Item
+    mutating func push(_ value:Item)
+    mutating func pop()->Item
+}
+
+struct operations<element> : stack
+{
+
+    var Items = [element]()
+    typealias Item=element
+    mutating func push(_ value: element) {
+        Items.append(value)
+    }
+    
+    mutating func pop() ->element {
+        return Items.removeLast()
+    }
+    
+    
+}
+
+var object=operations<Int>()
+object.push(5)
+object.push(6)
+print(object.Items)
+object.pop()
+print(object.Items)
+
+output:
+[5, 6]
+[5]
+explanation:
+typealias replaces the Item with Int . we can use anytype instead of Int. this works fine.
+
+//
+
+
+
+
