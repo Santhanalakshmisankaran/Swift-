@@ -1,0 +1,123 @@
+//strong reference
+
+
+import Foundation
+
+class Person{
+    var name:String
+    init(name:String)
+    {
+        self.name=name
+    }
+    var apartment:Apartment?
+    deinit
+    {
+        print("the person has deinitialized");
+    }
+}
+class Apartment{
+    var apt_name:String
+    init(apt_name:String)
+    {
+        self.apt_name=apt_name
+    }
+    var person:Person?
+    deinit
+    {
+        print("the apartment has deinitialized");
+    }
+}
+var jhon:Person?
+var lank:Apartment?
+jhon=Person(name:"Jhon")
+lank=Apartment(apt_name:"lank")
+jhon!.apartment=lank
+lank!.person=jhon
+jhon=nil
+lank=nil
+
+
+
+
+//weak refenrence
+
+import Foundation
+
+class Person{
+    var name:String
+    init(name:String)
+    {
+        self.name=name
+    }
+    var apartment:Apartment?
+    deinit
+    {
+        print("the person has deinitialized");
+    }
+}
+class Apartment{
+    var apt_name:String
+    init(apt_name:String)
+    {
+        self.apt_name=apt_name
+    }
+    weak var person:Person?
+    deinit
+    {
+        print("the apartment has deinitialized");
+    }
+}
+var jhon:Person?
+var lank:Apartment?
+jhon=Person(name:"Jhon")
+lank=Apartment(apt_name:"lank")
+jhon!.apartment=lank
+lank!.person=jhon
+jhon=nil
+lank=nil
+
+//output
+the person has deinitialized
+the apartment has deinitialized
+
+
+//unowned reference
+
+import Foundation
+
+class Person{
+    var name:String
+    init(name:String)
+    {
+        self.name=name
+    }
+    var creditcard:Creditcard?
+    deinit
+    {
+        print("the person has deinitialized");
+    }
+}
+class Creditcard{
+    var credit_name:String
+    unowned let person:Person
+    init(credit_name:String,person:Person)
+    {
+        self.credit_name=credit_name
+        self.person=person
+    }
+    
+    deinit
+    {
+        print("the creditcard has deinitialized");
+    }
+}
+var jhon:Person?
+jhon=Person(name:"Jhon")
+jhon!.creditcard=Creditcard(credit_name:"lank",person:jhon!)
+jhon=nil
+
+
+//output
+
+the person has deinitialized
+the creditcard has deinitialized
