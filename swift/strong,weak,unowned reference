@@ -1,5 +1,5 @@
 //strong reference
-
+whenever you store the reference into the variable or constant then that is called as a strong reference.
 
 import Foundation
 
@@ -36,10 +36,15 @@ lank!.person=jhon
 jhon=nil
 lank=nil
 
-
-
+no output
+explanation:In the above program ARC count is 2 for both jhon and apartment. Because the person has the strong reference 
+for the apartment and apartment also has a strong reference for the person. so here strong refernce cycle occur.when ever jhon 
+become nil ARC count will become 1 it will not become zero.same for the apartment also. to clear this cycle we are using weak 
+reference.
 
 //weak refenrence
+make weak reference by keeping weak keyword in front of variable. this will not have strong connectivity to the class. so we 
+can break this easily.
 
 import Foundation
 
@@ -80,8 +85,15 @@ lank=nil
 the person has deinitialized
 the apartment has deinitialized
 
+explantion: In the above program person class has strong reference to the apartment but apartment has weak reference on person
+class. when ever the person class object se to nil then the weak reference of the person also becomes nil.there is no object 
+to hold the apartment class object from the person class. Now ARC count for apartment became 1. Noe set the apartment class 
+object into nil. now both deinit called that means there  is no reference for the both classes.
 
 //unowned reference
+unowned reference is like weak reference only but it is a non optional constant value. this is usefull where one class is 
+depending on the other class. In below examle the person may not have a credit card so that is optional. But a credit card must
+have person. so that is unowned reference. when ever the person become nil then the credit card also become nil.
 
 import Foundation
 
@@ -121,3 +133,7 @@ jhon=nil
 
 the person has deinitialized
 the creditcard has deinitialized
+
+explanation:
+
+
