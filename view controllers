@@ -1,0 +1,98 @@
+//
+//  ViewController.swift
+//  viewcontrollers
+//
+//  Created by memobile-inc667 on 21/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+extension Date
+{
+    //open func string(from date: Date) -> String
+    func toString(style:DateFormatter.Style) -> String
+    {
+       let dateformatter = DateFormatter()
+        dateformatter.dateStyle=style
+        return dateformatter.string(from: self)
+    }
+}
+
+class ViewController: UIViewController {
+    let lab = UILabel()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        //label
+        let label =  UILabel()
+        label.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
+        label.autoresizingMask = [.flexibleWidth,.flexibleHeight,.flexibleTopMargin]
+        label.backgroundColor = UIColor.red
+        label.textColor = UIColor.white
+        label.text = "Sample Text"
+        label.font = UIFont.systemFont(ofSize: 17)
+        view.addSubview(label)
+        
+        
+        //activity indicator
+        let activityView = UIActivityIndicatorView(style: .medium)
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        activityView.color = UIColor(ciColor: .red)
+        activityView.hidesWhenStopped = true
+        self.view.addSubview(activityView)
+        
+        //Image view
+        
+        let imagename="food"
+        let image=UIImage(named: imagename)
+        let imageview=UIImageView(image: image!)
+        imageview.frame=CGRect(x: 10, y: 20, width: 100, height: 100)
+        view.addSubview(imageview)
+        
+        //datepicker
+        
+        let datepicker=UIDatePicker()
+        datepicker.addTarget(self, action: #selector(datevaluechange(datepicker:)), for: .valueChanged)
+            datepicker.datePickerMode = .date
+            //let cal = Calendar(identifier: .gregorian)
+            var components = DateComponents()
+            components.month = -1
+            components.day = 0
+            components.year = -1
+            let mindate = Calendar.current.date(byAdding: components, to: Date())
+            components.month = 0
+            components.day = 0
+            components.year = 0
+            let maxdate = Calendar.current.date(byAdding: components, to: Date())
+            datepicker.minimumDate = mindate
+            datepicker.maximumDate = maxdate
+            
+           /* datepicker.minimumDate = cal.date(byAdding: .day, value: -1, to: Date())
+            datepicker.date = datepicker.minimumDate ?? Date()
+            datepicker.minimumDate = Date()
+          datepicker.date*/
+        datepicker.frame = CGRect(x: 100, y: 100, width: 300, height: 216)
+            view.addSubview(datepicker)
+        //let str = mydate.toString(style: .medium)
+        //lab.font = UIFont(name: str, size: 30)
+            
+            /*let btn = UIButton()
+            btn.addTarget(self, action: #selector(emoji(sender:)), for: .touchUpInside)*/
+                   lab.frame = CGRect(x: 100, y: 200, width: 400, height: 300)
+        view.addSubview(lab)
+
+    }
+            
+    @objc func datevaluechange(datepicker:UIDatePicker)
+    {
+        let mydate = datepicker.date
+        let str = mydate.toString(style: .medium)
+        lab.text = str
+               // lab.text = datepicker.date
+      print(datepicker.date)
+    }
+    
+
+}
+
