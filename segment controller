@@ -52,5 +52,50 @@ import UIKit
             }
         }
     }
+//finding an segment from the textfield
 
+class ViewController: UIViewController,UITextFieldDelegate {
+   let lab = UILabel()
+    let text_field = UITextField()
+    let item = ["ios","android","blackberry"]
+    var segment_controller : UISegmentedControl!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //segment view controller
+        
+        segment_controller = UISegmentedControl(items: item)
+        segment_controller.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: 50)
+        segment_controller.backgroundColor = .yellow
+        segment_controller.tintColor = .blue
+        segment_controller.addTarget(self, action: #selector(indexvalue(sender:)), for: .valueChanged)
+        view.addSubview(segment_controller)
+        text_field.frame = CGRect(x: 0, y: 200, width: view.frame.width, height: 100)
+        text_field.delegate = self
+        text_field.backgroundColor = .darkGray
+        text_field.textColor = .white
+        view.addSubview(text_field)
+        text_field.addTarget(self, action: #selector(textDidchange(textField: )), for: .editingChanged)
+        }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("textFieldDidBeginEditing")
+    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print(" textFieldShouldBeginEditing")
+        return true
+    }
+    @objc func textDidchange(textField: UITextField){
+        for (index,value) in item.enumerated()
+        {
+            if textField.text?.lowercased() == value
+            {
+                segment_controller.selectedSegmentIndex = index
+            }
+        }
+    print("Text changed")
+
+    }
+    
+}
   
