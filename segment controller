@@ -40,6 +40,17 @@ import UIKit
         print("textFieldDidBeginEditing")
     }
 }
+//for loop for addtarget method
 
+ @objc func indexvalue(sender: UISegmentedControl)
+    {
+        for index in 0..<item.count
+        {
+            if index == sender.selectedSegmentIndex
+            {
+                text_field.text = item[sender.selectedSegmentIndex]
+            }
+        }
+    }
 
   
