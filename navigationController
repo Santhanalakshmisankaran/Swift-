@@ -63,3 +63,75 @@ extension secondviewcontroller{
 
     }
 }
+//firstviewcontroller
+
+//
+//  ViewController.swift
+//  navigation controller
+//
+//  Created by memobile-inc667 on 22/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+
+protocol datadelegate
+{
+    func passingData(name:String)
+}
+class FirstViewController: UIViewController,datadelegate{
+    var textfield = UITextField()
+    func passingData(name: String) {
+        textfield.text = name
+    }
+    let vc = secondviewcontroller()
+
+   var name:String = "santhu"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        //self.title = "First controller"
+        navigationItem.title = "nav item"
+        navigationController?.navigationBar.isTranslucent = false
+        let titlelable = UILabel(frame: CGRect(x: 0, y: 30, width: view.bounds.width, height: view.bounds.height))
+        navigationItem.titleView = titlelable
+        titlelable.text = "first controller"
+        titlelable.textAlignment = .center
+        titlelable.textColor = .black
+        let nextbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onButtontap))
+        
+        navigationItem.rightBarButtonItem = nextbutton
+        view.backgroundColor = .white
+        textfield.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: 50)
+        textfield.backgroundColor = .gray
+        textfield.textColor = .white
+        textfield.textAlignment = .center
+        textfield.addTarget(self, action: #selector(movetosecond(sender:)), for: .editingChanged)
+        view.addSubview(textfield)
+        
+    }
+    
+    @objc func onButtontap(sender:UIBarButtonItem)
+    {
+        vc.delegate1 = self
+        show(vc, sender: self)
+
+    }
+    @objc func movetosecond(sender:UITextField)
+    {
+        print("S")
+        vc.textfield.text = self.textfield.text
+    }
+    
+    @objc func test(){
+
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+    
+}
+
+//
