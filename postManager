@@ -1,0 +1,425 @@
+//
+//  ViewController.swift
+//  PostManager
+//
+//  Created by memobile-inc667 on 25/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+struct Post
+{
+    var userId:Int?
+    var Id:Int?
+    var title:String?
+    var body:String?
+}
+protocol  passingList {
+    func listCopy(List:Post)
+    
+}
+
+extension Data {
+    func toJSON() -> Any? {
+        return try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)
+    }
+}
+
+
+class ViewController: UITableViewController,passingList{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(list.count)
+        return list.count
+    }
+    func listCopy(List: Post) {
+        list.insert(List, at: 0)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+
+    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "my cell")
+        if (cell == nil)
+        {
+                cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "my cell")
+
+        }
+        let obj : Post = list[indexPath.row]
+        let imagename="food"
+        let image=UIImage(named: imagename)
+        //let imageview=UIImageView(image: image!)
+        cell?.imageView?.image = image
+        cell?.imageView?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        cell?.textLabel!.text = obj.title
+        cell?.detailTextLabel?.text = obj.body
+        return cell!
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let svc = secondViewController()
+        let obj : Post = list[indexPath.row]
+        svc.obj = obj
+        show(svc, sender: self)
+        //svc.navigationItem
+    }
+    
+var list: [Post] = []
+//    var tableview = UITableView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+//        tableview = UITableView(frame: CGRect(x: 0, y: 10, width: view.frame.width, height: view.frame.height))
+//        tableview.backgroundColor = .gray
+//        tableview.register(UITableViewCell.self, forCellReuseIdentifier: "my cell")
+//        tableview.delegate = self
+//        tableview.dataSource = self
+//        view.addSubview(tableview)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(movetopresent))
+        if let url = URL(string: "https://jsonplaceholder.typicode.com/posts")
+        {
+           let task =  URLSession.shared.dataTask(with: url){  data , response , error in
+                if let data = data {
+                    let jsonDict = data.toJSON() as? [[String:Any]]
+    
+                    for data in jsonDict ?? [] {
+                         var post = Post()
+                         post.userId = data["userId"] as? Int
+                         post.Id = data["id"] as? Int
+                         post.title = data["title"] as? String
+                         post.body = data["body"] as? String
+                        self.list.append(post)
+                    }
+                    self.list = self.list.sorted { $0.title!.lowercased() < $1.title!.lowercased() }
+                    //print(self.list)
+                    DispatchQueue.main.async {
+                    self.tableView.reloadData()
+
+                    }
+                }
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+                
+            }
+            
+            task.resume()
+        }
+       // list =  self.parseJson(any:json)
+    }
+    func parseJson(any:[[String:Any]])
+    {
+        
+        
+        
+        
+    }
+    @objc func movetopresent()
+    {
+        let vc = presentViewController()
+        vc.delegate1 = self
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
+        
+        
+    }
+}
+
+
+//secondViewController
+
+//
+//  secondViewController.swift
+//  PostManager
+//
+//  Created by memobile-inc667 on 26/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+struct Comments
+{
+    var postid : Int?
+    var id: Int?
+    var name : String?
+    var email : String?
+    var body: String?
+}
+class customTableViewCell:UITableViewCell
+{
+    let name = UILabel()
+    let email = UILabel()
+    let body = UILabel()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        name.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 20)
+        email.frame = CGRect(x: 0, y: 25, width: self.frame.width, height: 20)
+        body.frame = CGRect(x: 0, y: 50, width: self.frame.width, height:140)
+        body.numberOfLines = 0
+        body.adjustsFontSizeToFitWidth = true
+    
+        name.numberOfLines = 0
+        name.font = UIFont.boldSystemFont(ofSize: 20)
+        email.textColor = .blue
+        body.textColor = .red
+        self.addSubview(name)
+        self.addSubview(email)
+        self.addSubview(body)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class secondViewController: UITableViewController {
+     var list : [Comments] = []
+    var obj:Post?
+   
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(list.count)
+        return list.count
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200.0
+    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       // let cell = tableView.dequeueReusableCell(withIdentifier: "my cell") as! customTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "my cell") as? customTableViewCell
+        if cell == nil
+        {
+            cell = customTableViewCell(style: .default, reuseIdentifier: "my cell")
+        }
+        let obj1:Comments = list[indexPath.row]
+        cell?.name.text = obj1.name
+        cell?.email.text = obj1.email
+        cell?.body.text = obj1.body
+            
+        return cell!
+    }
+   //var textview = UITextView()
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Comments"
+    }
+//  override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//      self.tableView.sectionHeaderHeight = 160
+//       let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 140))
+//       label.numberOfLines = 0
+//       //label.backgroundColor = .gray
+//        label.text = obj?.body
+//      // label.textAlignment = .center
+//      // view.addSubview(label)
+//        let view = UIView()
+//        view.backgroundColor = .gray
+//       view.addSubview(label)
+//       return view
+//    }
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var label1 : UILabel?
+    
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 140))
+        label.numberOfLines = 0
+        //label.backgroundColor = .gray
+         label.text = obj?.body
+        tableView.tableHeaderView = label
+        
+        label1 = label
+        label1?.text = "s"
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "my cell")
+
+        let postId:String = String(describing: obj?.Id)
+        if let url = URL(string: "https://jsonplaceholder.typicode.com/posts/\(postId)/comments")
+               {
+                  let task =  URLSession.shared.dataTask(with: url){  data , response , error in
+                       if let data = data {
+                        let jsonList = data.toJSON() as? [[String:Any]]
+           
+                        for data in jsonList ?? []
+                    {
+                        var comment = Comments()
+                        comment.postid = data["postid"] as? Int
+                        comment.id = data["id"] as? Int
+                        comment.name = data["name"] as? String
+                        comment.email = data["email"] as? String
+                        comment.body = data["body"] as? String
+                        self.list.append(comment)
+                    }
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                        print(self.list)
+                    
+                }
+            }
+                task.resume()
+        }
+        navigationItem.title = obj?.title
+        
+    }
+    
+}       /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 150))
+               label.numberOfLines = 0
+            label.backgroundColor = .gray
+               
+               label.text = obj?.body
+              label.textAlignment = .center
+               //view.addSubview(label)
+        tableView.tableHeaderView = label
+        navigationItem.title = obj?.title*/
+
+        //textview in secondviewcontroller
+        /*textview.frame = CGRect(x: 0, y: 50, width: view.bounds.width, height: view.bounds.height)
+        textview.backgroundColor = .gray
+        textview.textColor = .white
+        textview.font = UIFont(name: "", size: 30)
+        view.addSubview(textview)
+        textview.text = obj?.body*/
+        // Do any additional setup after loading the view.
+        
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+//presentViewController
+
+//
+//  presentViewController.swift
+//  PostManager
+//
+//  Created by memobile-inc667 on 26/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+struct PostDetail
+{
+    var name : String?
+    var body : String?
+    let userId = 1
+}
+
+class presentViewController: UIViewController,UITextViewDelegate{
+    var textfield = UITextField()
+    var textview = UITextView()
+     var delegate1 : passingList?
+    override func viewDidLoad() {
+        //var postobj = PostDetail()
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.title = "Add"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        textfield.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: 50)
+        textfield.backgroundColor = .gray
+        textfield.textColor = .white
+        textfield.font = UIFont.systemFont(ofSize: 20)
+        textview.frame  = CGRect(x: 0, y: 200, width: view.frame.height, height: 200)
+        textview.backgroundColor = .lightGray
+        textview.textColor = .white
+        textview.font = UIFont.systemFont(ofSize: 25)
+        view.addSubview(textview)
+        view.addSubview(textfield)
+        textview.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(movetonext))
+        // Do any additional setup after loading the view.
+    }
+    
+
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    @objc func movetonext()
+    {
+        
+        let parameters : [String:Any] = ["name" :  textfield.text!,
+                                         "body" : textview.text! ,
+                         "user id" : 1]
+        let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
+        var request = URLRequest(url: url)
+        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        do{
+            
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters , options: .prettyPrinted)
+        }
+        catch let error
+        {
+            print(error.localizedDescription)
+        }
+//        request.addValue("application/json", forHTTPHeaderField: "charset=UTF-8")
+//        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+
+        let task = URLSession.shared.dataTask(with: request as URLRequest , completionHandler:{ data , response , error in
+            guard error == nil else{
+                return
+            }
+            guard let data = data else{
+                return
+            }
+            do
+            {
+                if let json = data.toJSON() as? [String:Any]
+                {
+                    var obj = Post()
+//                    obj.title = json["name"] as? String
+//                    obj.body = json["body"] as? String
+//                    obj.userId = json["userid"] as? Int
+                    obj.title = "aa"
+                    obj.body = "bb"
+                    obj.userId = 1
+                    print(json)
+                    DispatchQueue.main.async {
+                        self.delegate1?.listCopy(List: obj)
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                   
+                }
+            }
+            catch let error 
+            {
+                print(error.localizedDescription)
+            }
+            let responseString = String(data: data, encoding: .utf8)
+            print(responseString!)
+            
+        })
+        
+        task.resume()
+    }
+    @objc func cancel()
+    {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    @objc func valueEdit(sender: UITextField)
+    {
+        //postobj.name = sender.text
+    }
+    func textViewDidChange(_ textView: UITextView)
+    {
+       // postobj.body = textView.text
+    }
+}
