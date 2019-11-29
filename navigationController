@@ -1,0 +1,65 @@
+//navigationController
+//
+//  secondviewcontroller.swift
+//  navigation controller
+//
+//  Created by memobile-inc667 on 22/11/19.
+//  Copyright © 2019 memobile-inc667. All rights reserved.
+//
+
+import UIKit
+
+class secondviewcontroller: UIViewController {
+    var name:String?
+    var textfield = UITextField()
+    var delegate1:datadelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+         
+        // Do any additional setup after loading the view.
+        self.title = "Second"
+        navigationItem.title = "nav item"
+        let titlelable = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        titlelable.text = "second controller"
+        titlelable.textAlignment = .center
+        navigationItem.titleView = titlelable
+        let navButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(movetothird))
+        navigationItem.rightBarButtonItem = navButton
+        view.backgroundColor = .white
+        textfield.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: 50)
+        textfield.backgroundColor = .gray
+        textfield.textColor = .white
+        textfield.textAlignment = .center
+        textfield.addTarget(self, action: #selector(movetofirst), for: .editingChanged)
+//        textfield.text = name
+        view.addSubview(textfield)
+        
+       
+    }
+    
+    @objc func movetofirst()
+    {
+        delegate1?.passingData(name: textfield.text!)
+    }
+    @objc func movetothird()
+    {
+            let tvc = thirdviewcontroller()
+        tvc.name = textfield.text!
+        navigationController?.pushViewController(tvc, animated: true)
+        //show(tvc, sender: self)
+    }
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+    }
+        
+    
+}
+
+extension secondviewcontroller{
+    func sample() {
+        textfield.text = "yyyy"
+
+    }
+}
