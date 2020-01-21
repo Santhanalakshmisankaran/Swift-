@@ -1,4 +1,4 @@
 //equal and identical
 
 equal operator(==) checks that instances values are equal are not.
-identical operator checks that instances are equal or not.
+identical operator(===) checks that instances are equal or not.
