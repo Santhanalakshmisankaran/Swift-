@@ -1,0 +1,15 @@
+// get used to retrive a value 
+// set used to set some value
+
+
+var perimeter: Double {
+    get {
+        return 3.0 * sideLength
+    }
+    set {
+        sideLength = newValue / 3.0
+    }
+}
+
+let someVar = 3.0 * myTriangle.sideLength // get works
+myTriangle.perimeter = 100  // set works
