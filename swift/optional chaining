@@ -1,0 +1,5 @@
+// optional chaining is nothing but forced unwrap of optional properties,methods,subscripts by using if-let syntax.
+
+example:
+
+refer this link:https://medium.com/@neeraj.s.sharma/optional-chaining-7aacaabc40be.
